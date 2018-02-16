@@ -88,6 +88,15 @@ class Vec(ctypes.Structure):
         ("y", ctypes.c_double),
         ("z", ctypes.c_double),
     ]
+
+    def __repr__(self):
+        className = self.__class__.__name__
+        valueList = ", ".join(
+            "{}={}".format(attr, getattr(self, attr))
+            for attr, _ in self._fields_
+        )
+        return "{className}({valueList})".format(**vars())
+    
 # 下記データ型と対応する。
 # C | struct _vec_t {
 # C |     double x, y, z;
@@ -95,6 +104,6 @@ class Vec(ctypes.Structure):
 
 vec = Vec(10, 20, 30)
 
-print(vec.x, vec.y, vec.z)
+print(vec)
 struct_vec_rotate(ctypes.addressof(vec))
-print(vec.x, vec.y, vec.z)
+print(vec)
